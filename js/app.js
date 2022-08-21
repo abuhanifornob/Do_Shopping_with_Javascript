@@ -1,47 +1,49 @@
-const cart = [];
-// products-cart
+let productArray = [];
 
-function displayProduct()
-{
+function displayProduct() {
+    const totalProductElement = document.getElementById('totalProduct');
+    const tabelBody = document.getElementById('tabel-body');
+    totalProductElement.innerText = productArray.length;
+    tabelBody.innerText = '';
     let totalPrice = 0;
-    const totalProducts = document.getElementById("total-products");
-    totalProducts.innerText = cart.length;
 
-    const cartContainer = document.getElementById("products-cart");
-    cartContainer.textContent = '';
+    for (let i = 0; i < productArray.length; i++) {
+        const productName = productArray[i].productName;
+        const productPrice = productArray[i].productPrice;
+        const tr = document.createElement('tr');
+        totalPrice += productPrice;
 
-    for(let i = 0; i < cart.length; i++)
-    {
-        totalPrice += cart[i].pdPrice;
-
-        const tr = document.createElement("tr");
         tr.innerHTML = `
         <th>${i+1}</th>
-        <td>${cart[i].pdName}</td>
-        <td>${cart[i].pdPrice}</td>
-        `;
-        cartContainer.appendChild(tr);
+       <td>${productName}</td>
+      <td>${productPrice}</td>
+        `
+        tabelBody.appendChild(tr);
     }
     const tr = document.createElement('tr');
-    tr.innerHTML = `
-    <th></th>
-    <td>Total Price</td>
-    <td>${totalPrice}</td>
-    `;
 
-    cartContainer.appendChild(tr);
+    tr.innerHTML = `
+        <td></td>
+       <td>Total Price</td>
+      <td>${totalPrice}</td>
+        `
+    tabelBody.appendChild(tr);
 }
 
-function addToCart(element) {
-    const pdName = element.parentNode.parentNode.children[0].innerText;
-    const pdPrice = element.parentNode.parentNode.children[1].children[0].innerText;
+function addProduct(element) {
+    const productName = element.parentNode.parentNode.children[0].innerText;
+    const productPrice = element.parentNode.parentNode.children[1].children[0].innerText;
 
-    const pd = {
-        pdName: pdName,
-        pdPrice: parseInt(pdPrice)
+    console.log(productName);
+    console.log(productPrice);
+
+    const productObject = {
+        productName: productName,
+        productPrice: parseFloat(productPrice)
     }
-
-    cart.push(pd);
-    
+    productArray.push(productObject);
+    console.log(productArray);
     displayProduct();
+
+
 }
